@@ -4,10 +4,7 @@ public class Radix {
     if (col >= length(n)) {
       return 0;
     }
-    for (int i = 0; col < length(n) && i < col; i++) {
-      exponentVal *= 10;
-    }
-    return (n / exponentVal) % 10;
+    return (int) (n / Math.pow(10, col)) % 10;
   }
 
   public static int length (int n) {
@@ -34,24 +31,23 @@ public class Radix {
   public static void radixSortSimple (SortableLinkedList data) {
     SortableLinkedList [] buckets = new SortableLinkedList [10];
     int sizeBig = 1;
+    int a = 0;
     for (int i = 0; i < 10; i++) {
       buckets[i] = new SortableLinkedList();
     }
     for (int j = 0; j < sizeBig; j++) {
-      for (int i = 0; i < data.size(); i++) {
-        if (j == 0 && data.get(i) > sizeBig) {
-          sizeBig = length(data.get(i));
+      while (data.size() != 0) {
+        a = data.remove(0);
+        if (j == 0 && sizeBig < length(a)) {
+          sizeBig = length(a);
         }
-        buckets[(nth(data.get(i), j))].add(data.get(i));
-      }
-      for (int i = 0; i < data.size(); ) {
-        data.remove(0);
+        buckets[nth(a, j)].add(a);
       }
       merge(data, buckets);
     }
   }
 
   public static void radixSort (SortableLinkedList data) {
-    
+
   }
 }
